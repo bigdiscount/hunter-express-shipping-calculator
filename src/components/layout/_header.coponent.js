@@ -4,12 +4,12 @@ import { Link } from 'react-router-dom'
 const Header = () => {
   return (
     <header className="container">
-      <nav class="navbar navbar-expand-lg navbar-light bg-primary text-light">
-        <a class="navbar-brand" href="#!">
+      <nav className="navbar navbar-expand-lg navbar-light bg-primary text-light">
+        <a className="navbar-brand" href="#!">
           HEC
         </a>
         <button
-          class="navbar-toggler"
+          className="navbar-toggler"
           type="button"
           data-toggle="collapse"
           data-target="#navbarNav"
@@ -17,13 +17,13 @@ const Header = () => {
           aria-expanded="false"
           aria-label="Toggle navigation"
         >
-          <span class="navbar-toggler-icon"></span>
+          <span className="navbar-toggler-icon"></span>
         </button>
-        <div class="collapse navbar-collapse" id="navbarNav">
-          <ul class="navbar-nav">
-            <li class="nav-item active">
-              <Link class="nav-link" to="/">
-                Home <span class="sr-only">(current)</span>
+        <div className="collapse navbar-collapse" id="navbarNav">
+          <ul className="navbar-nav">
+            <li className="nav-item active">
+              <Link className="nav-link" to="/">
+                Home <span className="sr-only">(current)</span>
               </Link>
             </li>
           </ul>
