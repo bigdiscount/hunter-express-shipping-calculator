@@ -1,4 +1,6 @@
-export const zoneGuide = [
+const fs = require('fs')
+
+const zoneGuide = [
   {suburb:"A1 MINE SETTLEMENT", postcode: 3723, zone:57},
 {suburb:"AARONS PASS", postcode:2850, zone:23},
 {suburb:"ABBA RIVER", postcode:6280, zone:24},
@@ -18974,3 +18976,40 @@ export const zoneGuide = [
 {suburb:"ZUMSTEINS", postcode:3401, zone:57},
 {suburb:"ZUYTDORP", postcode:6536, zone:26}
 ]
+
+const createZoneGuide =  () =>{
+  let newObj = {}
+  return new Promise(async resolve=>{
+    const count = await zoneGuide.length
+    
+    for(let i=0; i<count; i++){
+      if(newObj[zoneGuide[i].postcode]){
+        newObj[zoneGuide[i].postcode]={
+          ...newObj[zoneGuide[i].postcode], 
+            [zoneGuide[i].suburb]:zoneGuide[i].zone 
+        }
+      }else{
+        newObj[zoneGuide[i].postcode] = {[zoneGuide[i].suburb]:zoneGuide[i].zone}
+      }
+
+      if(count === i+1){ 
+        resolve (newObj)
+      }
+    }
+      
+      
+     
+  })
+
+}
+
+createZoneGuide().then(data=>{
+  // console.log('seriously',JSON.stringify(data) )
+  const filePath = './newZoneGuide.js'
+  const dt = "export const zoneGuide = " + JSON.stringify(data)
+  fs.writeFile(filePath, dt, ()=>{
+    console.log("Zone guide created")
+  })
+}
+  ).catch(error=>console.log(error))
+ 
