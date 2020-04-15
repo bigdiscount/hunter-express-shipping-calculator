@@ -2,6 +2,11 @@
 
 This app calculates the shipping cost for the hunter express courier.
 
+## Deploy
+
+Url: https://hunter-express.now.sh/
+`run now --prod` to deploy app from project console.
+
 ## Price calculation
 
 he formula to work out the cost is 1st carton rate +18% Fuel Levy+10% GST
