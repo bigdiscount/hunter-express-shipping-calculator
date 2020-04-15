@@ -6,16 +6,19 @@ const CustomeForm = ({
   handleProductSearch,
   prodList,
   handleSelectProd,
-  showList,
-  totalCost = 0
+  handleOnPostcodeChange,
+  selectedSuburb,
+  calculateShippingCost,
+  totalCost
 }) => {
-  const { sku, weight, type, postcode, suburb, zone } = productInfo
-  console.log(productInfo)
+  const { sku, weight, postcode } = productInfo
+  const { lists, zone } = selectedSuburb
+
   return (
     <div width="50%">
       <form>
         <div className="form-row">
-          <div className="form-group col-md-5">
+          <div className="form-group col-md-6">
             <label htmlFor="sku">SKU</label>
             <input
               type="text"
@@ -26,7 +29,7 @@ const CustomeForm = ({
               value={sku}
               placeholder="Search product name"
             />
-            {showList.product && prodList.length && (
+            {prodList.length ? (
               <ul className="prod-list list-group" style={{ zIndex: 99 }}>
                 {prodList.map(
                   (row, i) =>
@@ -42,9 +45,11 @@ const CustomeForm = ({
                     )
                 )}
               </ul>
+            ) : (
+              ''
             )}
           </div>
-          <div className="form-group col-md-5">
+          <div className="form-group col-md-6">
             <label htmlFor="weight">Chargable Weight</label>
             <input
               type="text"
@@ -57,20 +62,6 @@ const CustomeForm = ({
               required
             />
           </div>
-          <div className="form-group col-md-2">
-            <label htmlFor="type">Type</label>
-
-            <select
-              className="form-control"
-              name="type"
-              onChange={handleOnChange}
-              required
-            >
-              <option value=""></option>
-              <option value="fixed">Fixed</option>
-              <option value="weight">Weight</option>
-            </select>
-          </div>
         </div>
         <div className="form-row">
           <div className="form-group col-md-5">
@@ -78,23 +69,31 @@ const CustomeForm = ({
             <input
               type="number"
               className="form-control"
-              id="postcode"
+              name="postcode"
               value={postcode}
               onChange={handleOnChange}
+              onBlur={handleOnPostcodeChange}
               placeholder="i.e. 2000"
+              max="9999"
               required
             />
           </div>
           <div className="form-group col-md-5">
             <label htmlFor="suburb">Suburb</label>
-            <input
-              type="text"
+            <select
               className="form-control"
               name="suburb"
-              value={suburb}
               onChange={handleOnChange}
               required
-            />
+            >
+              <option value=""></option>
+              {Object.keys(lists).length &&
+                Object.keys(lists).map((key, i) => (
+                  <option key={i} value={lists[key]}>
+                    {key}
+                  </option>
+                ))}
+            </select>
           </div>
           <div className="form-group col-md-2">
             <label htmlFor="zone">Zone</label>
@@ -102,16 +101,22 @@ const CustomeForm = ({
               type="number"
               className="form-control"
               name="zone"
-              value={zone}
               onChange={handleOnChange}
-              readOnly
+              value={zone}
               disabled
               required
             />
           </div>
         </div>
-        <div className="result text-white">
-          Total shipping cost = ${totalCost && totalCost}
+        <div
+          className="btn btn-block btn-primary"
+          onClick={calculateShippingCost}
+        >
+          Calculate
+        </div>
+        <hr />
+        <div className="result text-white" style={{ fontSize: '20px' }}>
+          Total shipping cost = ${totalCost}
         </div>
       </form>
     </div>
