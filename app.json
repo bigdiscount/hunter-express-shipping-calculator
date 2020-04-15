@@ -2,12 +2,7 @@
   "addons": [],
   "buildpacks": [
     {
-      "url": "heroku/nodejs"
+      "url": "mars/create-react-app"
     }
-  ],
-  "env": {},
-  "formation": {},
-  "name": "hunder-express",
-  "scripts": {},
-  "stack": "heroku-18"
+  ]
 }
