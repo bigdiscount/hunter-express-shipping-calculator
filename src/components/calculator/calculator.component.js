@@ -2,7 +2,8 @@ import React, { useState, useEffect } from 'react'
 import CustomeForm from '../custome-Form/Custome-form.component'
 import { products } from '../../assets/products'
 import { zoneGuide } from '../../assets/newZoneGuide'
-import { zoneRates } from '../../assets/zoneRate'
+import { hunterExpressZoneRate } from '../../assets/hunterExpressZoneRate'
+import { getEgoRate, getSandleRate } from '../../utils/api'
 
 const initialProduct = {
   sku: '',
@@ -25,7 +26,10 @@ const initSuburb = {
 }
 const Calculator = () => {
   const [productInfo, setProductInfo] = useState(initialProduct)
-  const [totalCost, setTotalCost] = useState(0)
+  const [hunterExpressTotal, setHunterExpressTotal] = useState(0)
+  const [egoTotal, setEgoTotal] = useState(0)
+  const [sandleWCbmTotal, setSandleWCbmTotal] = useState(0)
+  const [sandleNoCbmTotal, setsandleNoCbmTotal] = useState(0)
   const [basePrice, setBasePrice] = useState(initialBasePrice)
   const [prodList, setProdList] = useState(initialBasePrice)
   // const [showList, setShowList] = useState(initialShowList)
@@ -36,11 +40,43 @@ const Calculator = () => {
     // showList,
     selectedSuburb,
     basePrice,
-    totalCost
+    hunterExpressTotal,
+    egoTotal,
+    sandleWCbmTotal,
+    sandleNoCbmTotal
   ])
 
-  const calculateShippingCost = () => {
+  const calculateShippingCost = async () => {
     const { l, w, h, weight } = productInfo
+
+    let cbm = true
+    const dataToCsv = {
+      postcode: '',
+      suburb: ''
+    }
+    const argsForApi = { width: w, height: h, depth: l, weight }
+    // EGO PRICING
+    getEgoRate(argsForApi, dataToCsv)
+      .then(price => {
+        setEgoTotal(price)
+      })
+      .catch(error => console.log(error))
+
+    //SENDLE PRICING WITHOUT CBM
+    getSandleRate(argsForApi, dataToCsv, (cbm = false))
+      .then(price => {
+        setsandleNoCbmTotal(price)
+      })
+      .catch(error => console.log(error))
+
+    //SANDLE PRICING WITH CBM
+    getSandleRate(argsForApi, dataToCsv, cbm)
+      .then(price => {
+        setSandleWCbmTotal(price)
+      })
+      .catch(error => console.log(error))
+
+    //HUNTER EXPRESS PRICING
     const cubicWeight = ((l * w * h) / 1000000) * 250 //changing cm cubic to weight cubic
 
     const chargableWeith = weight > cubicWeight ? weight : cubicWeight
@@ -49,7 +85,7 @@ const Calculator = () => {
     const baseCost = basePrice.fb + basePrice.sb * (packageCount - 1)
 
     const total = baseCost * basePrice.fuel * basePrice.gst
-    setTotalCost(total)
+    setHunterExpressTotal(total)
   }
 
   const handleProductSearch = e => {
@@ -76,7 +112,7 @@ const Calculator = () => {
     if (name === 'suburb') {
       setBasePrice({
         ...basePrice,
-        ...zoneRates[value]
+        ...hunterExpressZoneRate[value]
       })
       setSelectedSuburb({
         ...selectedSuburb,
@@ -113,7 +149,7 @@ const Calculator = () => {
     })
   }
   return (
-    <div>
+    <div className="text-white">
       Use calculator below to calculate Hunter Express shipping const.
       <hr />
       <CustomeForm
@@ -124,7 +160,10 @@ const Calculator = () => {
         handleSelectProd={handleSelectProd}
         handleOnPostcodeChange={handleOnPostcodeChange}
         selectedSuburb={selectedSuburb}
-        totalCost={totalCost}
+        hunterExpressTotal={hunterExpressTotal}
+        egoTotal={egoTotal}
+        sandleWCbmTotal={sandleWCbmTotal}
+        sandleNoCbmTotal={sandleNoCbmTotal}
         calculateShippingCost={calculateShippingCost}
       />
     </div>

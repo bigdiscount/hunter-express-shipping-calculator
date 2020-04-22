@@ -155,7 +155,7 @@ export const products =
 {sku:'BD-FWAVE-M',title:'Super Chef Oven Convection Micro Oven 17L',weight:6.9,l:38,w:38,h:25},
 {sku:'BD-WaterFilter-10L',title:'10L Water Filter Bottle Bench Top Dispenser Purifier 8 Stage Ceramic Carbon',weight:0,l:0,w:0,h:0},
 {sku:'BD-WaterFilter-14L',title:'14L Water Filter Bottle Bench Top Dispenser Purifier 8 Stage Ceramic Carbon',weight:2.6,l:29,w:29,h:25},
-{sku:'BD-WaterFilter-21L',title:'21LWater Filter Bottle Bench Top Dispenser Purifier 8 Stage Ceramic Carbon',weight:3.8,l:32,w:21,h:31},
+{sku:'BD-WaterFilter-21L',title:'21L Water Filter Bottle Bench Top Dispenser Purifier 8 Stage Ceramic Carbon',weight:3.8,l:32,w:21,h:31},
 {sku:'BD-WaterFilter-24L',title:'24L Water Filter Bottle Bench Top Dispenser Purifier 8 Stage Ceramic Carbon',weight:3.8,l:36,w:27,h:39},
 {sku:'BD-WaterFilter-28L',title:'28L Water Filter Bottle Bench Top Dispenser Purifier 8 Stage Ceramic Carbon',weight:5.1,l:37,w:35,h:26},
 {sku:'BD-WaterFilter-32L',title:'32L Water Filter Bottle Bench Top Dispenser Purifier 8 Stage Ceramic Carbon',weight:4.1,l:35,w:35,h:29},

@@ -9,7 +9,10 @@ const CustomeForm = ({
   handleOnPostcodeChange,
   selectedSuburb,
   calculateShippingCost,
-  totalCost
+  hunterExpressTotal,
+  egoTotal,
+  sandleWCbmTotal,
+  sandleNoCbmTotal
 }) => {
   const { sku, weight, postcode } = productInfo
   const { lists, zone } = selectedSuburb
@@ -18,7 +21,7 @@ const CustomeForm = ({
     <div width="50%">
       <form>
         <div className="form-row">
-          <div className="form-group col-md-6">
+          <div className="form-group col-md-6  text-white ">
             <label htmlFor="sku">SKU</label>
             <input
               type="text"
@@ -30,7 +33,10 @@ const CustomeForm = ({
               placeholder="Search product name"
             />
             {prodList.length ? (
-              <ul className="prod-list list-group" style={{ zIndex: 99 }}>
+              <ul
+                className="prod-list list-group text-dark"
+                style={{ zIndex: 99 }}
+              >
                 {prodList.map(
                   (row, i) =>
                     i < 6 && (
@@ -49,7 +55,7 @@ const CustomeForm = ({
               ''
             )}
           </div>
-          <div className="form-group col-md-6">
+          <div className="form-group col-md-6  text-white">
             <label htmlFor="weight">Chargable Weight</label>
             <input
               type="text"
@@ -64,7 +70,7 @@ const CustomeForm = ({
           </div>
         </div>
         <div className="form-row">
-          <div className="form-group col-md-5">
+          <div className="form-group col-md-5 text-white ">
             <label htmlFor="postcode">Postcode</label>
             <input
               type="number"
@@ -78,7 +84,7 @@ const CustomeForm = ({
               required
             />
           </div>
-          <div className="form-group col-md-5">
+          <div className="form-group col-md-5 text-white">
             <label htmlFor="suburb">Suburb</label>
             <select
               className="form-control"
@@ -95,7 +101,7 @@ const CustomeForm = ({
                 ))}
             </select>
           </div>
-          <div className="form-group col-md-2">
+          <div className="form-group col-md-2 text-white">
             <label htmlFor="zone">Zone</label>
             <input
               type="number"
@@ -121,8 +127,10 @@ const CustomeForm = ({
           Auspost eParcel = 0 <br />
           Auspost Satchell = 0 <br />
           Courier Please = 0 <br />
-          Auspost Satchell = 0 <br />
-          Hunter express = ${totalCost}
+          Sandle with CBM = ${sandleWCbmTotal} <br />
+          Sandle without CBM = ${sandleNoCbmTotal} <br />
+          Hunter express = ${hunterExpressTotal} <br />
+          Ego = ${egoTotal}
         </div>
       </form>
     </div>

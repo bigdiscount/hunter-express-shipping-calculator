@@ -1,4 +1,4 @@
-export const zoneRates = {
+export const hunterExpressZoneRate = {
   1: { fb: 9.5, sb: 7.2, type: 'fixed' },
   2: { fb: 18.75, sb: 14.8, type: 'fixed' },
   3: { fb: 24, sb: 19, type: 'fixed' },

@@ -9,7 +9,7 @@ run `npm start`
 ## Deploy
 
 Url: https://hunter-express.now.sh/
-`run now --prod` to deploy app from project console.
+run `now --prod` to deploy app from project console.
 
 ## Price calculation
 
