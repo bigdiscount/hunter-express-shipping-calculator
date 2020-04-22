@@ -96,7 +96,7 @@ const CustomeForm = ({
               <option value=""></option>
               {Object.keys(lists).length &&
                 Object.keys(lists).map((key, i) => (
-                  <option key={i} value={lists[key]}>
+                  <option key={i} value={`${lists[key]}|${key}`}>
                     {key}
                   </option>
                 ))}

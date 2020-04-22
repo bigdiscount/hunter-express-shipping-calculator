@@ -6,7 +6,7 @@ export const getEgoRate = async (argsForApi = {}, dataToCsv = {}) => {
 
   const { width, height, depth, weight } = argsForApi
   return new Promise(async (resolve, reject) => {
-    const endpoing = `http://www.e-go.com.au/calculatorAPI2?pickuppostcode=2036&pickupsuburb=Matraville&deliverypostcode=${DPostcode}&deliverysuburb=${suburb}&width=${width}&height=${height}&depth=${depth}&weight=${weight}`
+    const endpoing = `https://www.e-go.com.au/calculatorAPI2?pickuppostcode=2036&pickupsuburb=Matraville&deliverypostcode=${DPostcode}&deliverysuburb=${suburb}&width=${width}&height=${height}&depth=${depth}&weight=${weight}`
     let price = 'na'
 
     try {
@@ -15,6 +15,7 @@ export const getEgoRate = async (argsForApi = {}, dataToCsv = {}) => {
           connection: 'keep-alive'
         }
       })
+      console.log('ego', result)
       if (result.status === 200 && result.data.startsWith('error=OK')) {
         const val = result.data.split('\n')
         price = Math.ceil(val[2].split('=')[1])
@@ -50,7 +51,7 @@ export const getSandleRate = async (argsForApi = {}, dataToCsv = {}, cbm) => {
           Accept: 'application/json'
         }
       })
-
+      console.log('sandle', result)
       if (result && result.status === 200 && result.data.length) {
         price = result.data[0].quote.gross.amount
       }
@@ -70,7 +71,6 @@ export const getAuspostEparcelRate = async (
 
   const { width, height, depth, weight } = argsForApi
 
-  console.log('checking env', process.env.AUSPOST_API_KEY)
   const endpoing = `https://digitalapi.auspost.com.au/postage/parcel/domestic/calculate.json?length=${depth}&width=${width}&height=${height}&weight=${weight}&from_postcode=2036&to_postcode=${DPostcode}&service_code=AUS_PARCEL_REGULAR`
 
   return new Promise(async (resolve, reject) => {
@@ -79,10 +79,10 @@ export const getAuspostEparcelRate = async (
     try {
       const result = await axios.get(endpoing, {
         headers: {
-          'AUTH-KEY': process.env.AUSPOST_API_KEY
+          'AUTH-KEY': 'ae1ad480-d2c3-476a-8cba-15bc16cbbfbf'
         }
       })
-
+      console.log('auspost', result)
       if (result && result.status === 200 && result.data) {
         price = result.data.postage_result.total_cost
       }

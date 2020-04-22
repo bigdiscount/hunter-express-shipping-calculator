@@ -23,4 +23,4 @@ If over 25KG , 2ND carton rate apply
 
 ## product file to object
 
-use in xls file ={sku:'BD-Ankle_Weight-2kg',title:'2kg Ankle Weight Wrist Power Strap Exercise',weight:,l:,w:,h:},
+use in xls file ="{sku:"&A2&",title:"&A2&" "&B2&",weight:"&C2&",l:"&D2&",w:"&E2&",h:"&F2&"},"

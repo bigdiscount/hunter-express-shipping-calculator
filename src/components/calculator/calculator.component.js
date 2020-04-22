@@ -52,41 +52,42 @@ const Calculator = () => {
   ])
 
   const calculateShippingCost = async () => {
-    const { l, w, h, weight } = productInfo
+    const { l, w, h, weight, postcode, suburb } = productInfo
 
     let cbm = true
     const dataToCsv = {
-      postcode: '',
-      suburb: ''
+      postcode,
+      suburb
     }
     const argsForApi = { width: w, height: h, depth: l, weight }
     // EGO PRICING
-    getEgoRate(argsForApi, dataToCsv)
-      .then(price => {
-        setEgoTotal(price)
-      })
-      .catch(error => console.log(error))
+    // getEgoRate(argsForApi, dataToCsv)
+    //   .then(price => {
+    //     console.log('response from ego api call', price)
+    //     setEgoTotal(price)
+    //   })
+    //   .catch(error => console.log(error))
 
     //SENDLE PRICING WITHOUT CBM
-    getSandleRate(argsForApi, dataToCsv, (cbm = false))
-      .then(price => {
-        setsandleNoCbmTotal(price)
-      })
-      .catch(error => console.log(error))
+    // getSandleRate(argsForApi, dataToCsv, (cbm = false))
+    //   .then(price => {
+    //     setsandleNoCbmTotal(price)
+    //   })
+    //   .catch(error => console.log(error))
 
     //SANDLE PRICING WITH CBM
-    getSandleRate(argsForApi, dataToCsv, cbm)
-      .then(price => {
-        setSandleWCbmTotal(price)
-      })
-      .catch(error => console.log(error))
+    // getSandleRate(argsForApi, dataToCsv, cbm)
+    //   .then(price => {
+    //     setSandleWCbmTotal(price)
+    //   })
+    //   .catch(error => console.log(error))
 
     //AUSTRALIAN POST PRICING
-    getAuspostEparcelRate(argsForApi, dataToCsv)
-      .then(price => {
-        setAuspostEparcelTotal(price)
-      })
-      .catch(error => console.log(error))
+    // getAuspostEparcelRate(argsForApi, dataToCsv)
+    //   .then(price => {
+    //     setAuspostEparcelTotal(price)
+    //   })
+    //   .catch(error => console.log(error))
 
     //HUNTER EXPRESS PRICING
     const cubicWeight = ((l * w * h) / 1000000) * 250 //changing cm cubic to weight cubic
@@ -122,14 +123,23 @@ const Calculator = () => {
 
     const { name, value } = e.target
     if (name === 'suburb') {
+      const args = value.split('|')
+      const zone = args[0]
+      const suburb = args[1]
       setBasePrice({
         ...basePrice,
-        ...hunterExpressZoneRate[value]
+        ...hunterExpressZoneRate[zone]
       })
       setSelectedSuburb({
         ...selectedSuburb,
-        zone: value
+        zone,
+        suburb
       })
+      setProductInfo({
+        ...productInfo,
+        suburb
+      })
+      return
     }
 
     setProductInfo({
@@ -160,6 +170,7 @@ const Calculator = () => {
       postcode: pc
     })
   }
+
   return (
     <div className="text-white">
       Use calculator below to calculate Hunter Express shipping const.
