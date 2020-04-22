@@ -44,16 +44,11 @@ const Calculator = () => {
     const cubicWeight = ((l * w * h) / 1000000) * 250 //changing cm cubic to weight cubic
 
     const chargableWeith = weight > cubicWeight ? weight : cubicWeight
-    console.log('chargable weight ->', chargableWeith)
     const baseAllowWeight = 25
     const packageCount = Math.ceil(chargableWeith / baseAllowWeight)
-    console.log('total package count ->', packageCount)
     const baseCost = basePrice.fb + basePrice.sb * (packageCount - 1)
-    console.log('base rate ->', baseCost)
-    console.log('base total price ->', baseCost)
 
     const total = baseCost * basePrice.fuel * basePrice.gst
-    console.log(total)
     setTotalCost(total)
   }
 

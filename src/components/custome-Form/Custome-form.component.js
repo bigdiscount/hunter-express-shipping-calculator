@@ -116,7 +116,13 @@ const CustomeForm = ({
         </div>
         <hr />
         <div className="result text-white" style={{ fontSize: '20px' }}>
-          Total shipping cost = ${totalCost}
+          Shipping cost:
+          <hr />
+          Auspost eParcel = 0 <br />
+          Auspost Satchell = 0 <br />
+          Courier Please = 0 <br />
+          Auspost Satchell = 0 <br />
+          Hunter express = ${totalCost}
         </div>
       </form>
     </div>
