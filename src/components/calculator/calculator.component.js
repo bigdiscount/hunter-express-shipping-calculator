@@ -3,7 +3,11 @@ import CustomeForm from '../custome-Form/Custome-form.component'
 import { products } from '../../assets/products'
 import { zoneGuide } from '../../assets/newZoneGuide'
 import { hunterExpressZoneRate } from '../../assets/hunterExpressZoneRate'
-import { getEgoRate, getSandleRate } from '../../utils/api'
+import {
+  getEgoRate,
+  getSandleRate,
+  getAuspostEparcelRate
+} from '../../utils/api'
 
 const initialProduct = {
   sku: '',
@@ -30,6 +34,7 @@ const Calculator = () => {
   const [egoTotal, setEgoTotal] = useState(0)
   const [sandleWCbmTotal, setSandleWCbmTotal] = useState(0)
   const [sandleNoCbmTotal, setsandleNoCbmTotal] = useState(0)
+  const [auspostEparcelTotal, setAuspostEparcelTotal] = useState(0)
   const [basePrice, setBasePrice] = useState(initialBasePrice)
   const [prodList, setProdList] = useState(initialBasePrice)
   // const [showList, setShowList] = useState(initialShowList)
@@ -73,6 +78,13 @@ const Calculator = () => {
     getSandleRate(argsForApi, dataToCsv, cbm)
       .then(price => {
         setSandleWCbmTotal(price)
+      })
+      .catch(error => console.log(error))
+
+    //AUSTRALIAN POST PRICING
+    getAuspostEparcelRate(argsForApi, dataToCsv)
+      .then(price => {
+        setAuspostEparcelTotal(price)
       })
       .catch(error => console.log(error))
 
@@ -165,6 +177,7 @@ const Calculator = () => {
         sandleWCbmTotal={sandleWCbmTotal}
         sandleNoCbmTotal={sandleNoCbmTotal}
         calculateShippingCost={calculateShippingCost}
+        auspostEparcelTotal={auspostEparcelTotal}
       />
     </div>
   )

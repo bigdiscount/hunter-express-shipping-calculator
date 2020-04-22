@@ -7,7 +7,7 @@ export const getEgoRate = async (argsForApi = {}, dataToCsv = {}) => {
   const { width, height, depth, weight } = argsForApi
   return new Promise(async (resolve, reject) => {
     const endpoing = `http://www.e-go.com.au/calculatorAPI2?pickuppostcode=2036&pickupsuburb=Matraville&deliverypostcode=${DPostcode}&deliverysuburb=${suburb}&width=${width}&height=${height}&depth=${depth}&weight=${weight}`
-    let price = 25
+    let price = 'na'
 
     try {
       const result = await axios.get(endpoing, {
@@ -40,7 +40,7 @@ export const getSandleRate = async (argsForApi = {}, dataToCsv = {}, cbm) => {
 
   const endpoing = cbm ? endpoing_with_cbm : endpoing_without_cbm
   return new Promise(async (resolve, reject) => {
-    let price = 25
+    let price = 'na'
 
     try {
       const result = await axios.get(endpoing, {
@@ -53,6 +53,38 @@ export const getSandleRate = async (argsForApi = {}, dataToCsv = {}, cbm) => {
 
       if (result && result.status === 200 && result.data.length) {
         price = result.data[0].quote.gross.amount
+      }
+      resolve(price)
+    } catch (error) {
+      // console.error(error.message, postcode, suburb)
+      resolve(price)
+    }
+  })
+}
+export const getAuspostEparcelRate = async (
+  argsForApi = {},
+  dataToCsv = {}
+) => {
+  const { postcode } = dataToCsv
+  const DPostcode = postcode < 1000 ? '0' + postcode : postcode
+
+  const { width, height, depth, weight } = argsForApi
+
+  console.log('checking env', process.env.AUSPOST_API_KEY)
+  const endpoing = `https://digitalapi.auspost.com.au/postage/parcel/domestic/calculate.json?length=${depth}&width=${width}&height=${height}&weight=${weight}&from_postcode=2036&to_postcode=${DPostcode}&service_code=AUS_PARCEL_REGULAR`
+
+  return new Promise(async (resolve, reject) => {
+    let price = 'na'
+
+    try {
+      const result = await axios.get(endpoing, {
+        headers: {
+          'AUTH-KEY': process.env.AUSPOST_API_KEY
+        }
+      })
+
+      if (result && result.status === 200 && result.data) {
+        price = result.data.postage_result.total_cost
       }
       resolve(price)
     } catch (error) {
