@@ -3,7 +3,7 @@ import CustomeForm from '../custome-Form/Custome-form.component'
 import { products } from '../../assets/products'
 import { zoneGuide } from '../../assets/newZoneGuide'
 import { hunterExpressZoneRate } from '../../assets/hunterExpressZoneRate'
-import { calculateEparcel } from '../../assets/ausPost/index'
+import { calculateEparcel, calculateSatchel } from '../../assets/ausPost/index'
 // import {
 //   getEgoRate,
 //   getSandleRate,
@@ -36,6 +36,7 @@ const Calculator = () => {
   const [sandleWCbmTotal, setSandleWCbmTotal] = useState(0)
   const [sandleNoCbmTotal, setsandleNoCbmTotal] = useState(0)
   const [auspostEparcelTotal, setAuspostEparcelTotal] = useState(0)
+  const [auspostSatchelTotal, setAuspostSatchelTotal] = useState(0)
   const [basePrice, setBasePrice] = useState(initialBasePrice)
   const [prodList, setProdList] = useState(initialBasePrice)
   // const [showList, setShowList] = useState(initialShowList)
@@ -49,7 +50,9 @@ const Calculator = () => {
     hunterExpressTotal,
     egoTotal,
     sandleWCbmTotal,
-    sandleNoCbmTotal
+    sandleNoCbmTotal,
+    auspostEparcelTotal,
+    auspostSatchelTotal
   ])
 
   const calculateShippingCost = async () => {
@@ -65,37 +68,11 @@ const Calculator = () => {
 
     const eparcelCost = await calculateEparcel(postcode, weight)
     setAuspostEparcelTotal(eparcelCost)
-    // EGO PRICING
-    // getEgoRate(argsForApi, dataToCsv)
-    //   .then(price => {
-    //     console.log('response from ego api call', price)
-    //     setEgoTotal(price)
-    //   })
-    //   .catch(error => console.log(error))
 
-    //SENDLE PRICING WITHOUT CBM
-    // getSandleRate(argsForApi, dataToCsv, (cbm = false))
-    //   .then(price => {
-    //     setsandleNoCbmTotal(price)
-    //   })
-    //   .catch(error => console.log(error))
-
-    //SANDLE PRICING WITH CBM
-    // getSandleRate(argsForApi, dataToCsv, cbm)
-    //   .then(price => {
-    //     setSandleWCbmTotal(price)
-    //   })
-    //   .catch(error => console.log(error))
-
-    //AUSTRALIAN POST PRICING
-    // getAuspostEparcelRate(argsForApi, dataToCsv)
-    //   .then(price => {
-    //     setAuspostEparcelTotal(price)
-    //   })
-    //   .catch(error => console.log(error))
-
-    //HUNTER EXPRESS PRICING
     const cubicWeight = ((l * w * h) / 1000000) * 250 //changing cm cubic to weight cubic
+
+    const satchelCost = await calculateSatchel(weight, cubicWeight)
+    setAuspostSatchelTotal(satchelCost)
 
     const chargableWeith = weight > cubicWeight ? weight : cubicWeight
     const baseAllowWeight = 25
@@ -194,6 +171,7 @@ const Calculator = () => {
         sandleNoCbmTotal={sandleNoCbmTotal}
         calculateShippingCost={calculateShippingCost}
         auspostEparcelTotal={auspostEparcelTotal}
+        auspostSatchelTotal={auspostSatchelTotal}
       />
     </div>
   )

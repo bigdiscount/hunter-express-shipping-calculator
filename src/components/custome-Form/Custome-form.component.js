@@ -13,7 +13,8 @@ const CustomeForm = ({
   egoTotal,
   sandleWCbmTotal,
   sandleNoCbmTotal,
-  auspostEparcelTotal
+  auspostEparcelTotal,
+  auspostSatchelTotal
 }) => {
   const { sku, weight, postcode } = productInfo
   const { lists, zone } = selectedSuburb
@@ -126,7 +127,8 @@ const CustomeForm = ({
           Shipping cost:
           <hr />
           Auspost eParcel = ${auspostEparcelTotal} <br />
-          Auspost Satchell = 0 <br />
+          Auspost Satchell = ${auspostSatchelTotal}
+          <br />
           Sandle with CBM = ${sandleWCbmTotal} <br />
           Sandle without CBM = ${sandleNoCbmTotal} <br />
           Hunter express = ${hunterExpressTotal} <br />
