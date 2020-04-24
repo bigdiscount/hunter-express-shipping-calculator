@@ -31,7 +31,7 @@ const xlargeSatchelCost = 18.5 * afterDiscount
 const cubicWeightXLarge = 5.12
 
 const maxWeight = 5 //kg
-const smallWeight = 0.5
+const smallWeight = 0.5 //kg
 
 export const calculateSatchel = (deadWeight, cubicWeight) => {
   return new Promise(resolve => {
