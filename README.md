@@ -23,4 +23,7 @@ If over 25KG , 2ND carton rate apply
 
 ## product file to object
 
-use in xls file ="{sku:"&A2&",title:"&A2&" "&B2&",weight:"&C2&",l:"&D2&",w:"&E2&",h:"&F2&"},"
+For the hunter express zone guide, use in xls file ="{sku:"&A2&",title:"&A2&" "&B2&",weight:"&C2&",l:"&D2&",w:"&E2&",h:"&F2&"},"
+
+For the Auspost price guide ="'"&A2&"':{'<500g':"&C2&",'<25kg-1':"&D2&",'<25kg-2':"&E2&",perKg:"&F2&"},"
+For the Austpost zone guide
