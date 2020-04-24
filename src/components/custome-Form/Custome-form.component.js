@@ -127,11 +127,9 @@ const CustomeForm = ({
           <hr />
           Auspost eParcel = ${auspostEparcelTotal} <br />
           Auspost Satchell = 0 <br />
-          Courier Please = 0 <br />
           Sandle with CBM = ${sandleWCbmTotal} <br />
           Sandle without CBM = ${sandleNoCbmTotal} <br />
           Hunter express = ${hunterExpressTotal} <br />
-          Ego = ${egoTotal}
         </div>
       </form>
     </div>

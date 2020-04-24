@@ -175,5 +175,7 @@ export const products =
     {sku:'CMF-28L',title:'CMF-28L Replacement Ceramic Filter for 28L Water Bottle Bench Top Dispenser Purifier',weight:1.5,l:12,w:11,h:12},
     {sku:'CMF-32L',title:'CMF-32L Replacement Ceramic Filter for 32L Water Bottle Bench Top Dispenser Purifier',weight:1.5,l:12,w:11,h:12},
     {sku:'dicer-fusion',title:'dicer-fusion Dicer fuson',weight:2,l:32,w:18,h:18},
+    {sku:'YLT-0068',title:'YLT-0068 Bathroom Pole Rack',weight:2.5,l:88,w:6,h:26.5},
+     
     
 ]

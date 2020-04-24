@@ -3,11 +3,12 @@ import CustomeForm from '../custome-Form/Custome-form.component'
 import { products } from '../../assets/products'
 import { zoneGuide } from '../../assets/newZoneGuide'
 import { hunterExpressZoneRate } from '../../assets/hunterExpressZoneRate'
-import {
-  getEgoRate,
-  getSandleRate,
-  getAuspostEparcelRate
-} from '../../utils/api'
+import { calculateEparcel } from '../../assets/ausPost/index'
+// import {
+//   getEgoRate,
+//   getSandleRate,
+//   getAuspostEparcelRate
+// } from '../../utils/api'
 
 const initialProduct = {
   sku: '',
@@ -59,7 +60,11 @@ const Calculator = () => {
       postcode,
       suburb
     }
+
     const argsForApi = { width: w, height: h, depth: l, weight }
+
+    const eparcelCost = await calculateEparcel(postcode, weight)
+    setAuspostEparcelTotal(eparcelCost)
     // EGO PRICING
     // getEgoRate(argsForApi, dataToCsv)
     //   .then(price => {
