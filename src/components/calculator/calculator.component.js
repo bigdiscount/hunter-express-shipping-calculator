@@ -67,13 +67,14 @@ const Calculator = () => {
 
     const argsForApi = { width: w, height: h, depth: l, weight: roundedWeight }
 
-    const eparcelCost = await calculateEparcel(postcode, roundedWeight)
-    setAuspostEparcelTotal(eparcelCost)
+    const eparcelCost = (await calculateEparcel(postcode, roundedWeight)) || 0
+    setAuspostEparcelTotal(eparcelCost.toFixed(2))
 
     const cubicWeight = ((l * w * h) / 1000000) * 250 //changing cm cubic to weight cubic
 
-    const satchelCost = await calculateSatchel(roundedWeight, cubicWeight)
-    setAuspostSatchelTotal(satchelCost)
+    const satchelCost =
+      (await calculateSatchel(roundedWeight, cubicWeight)) || 0
+    setAuspostSatchelTotal(satchelCost.toFixed(2))
 
     let chargableWeigth = weight > cubicWeight ? weight : cubicWeight
     chargableWeigth = Math.ceil(chargableWeigth)
@@ -82,7 +83,7 @@ const Calculator = () => {
     const baseCost = basePrice.fb + basePrice.sb * (packageCount - 1)
 
     const total = baseCost * basePrice.fuel * basePrice.gst
-    setHunterExpressTotal(total)
+    setHunterExpressTotal(total.toFixed(2))
   }
 
   const handleProductSearch = e => {
