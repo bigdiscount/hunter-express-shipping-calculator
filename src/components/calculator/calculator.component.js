@@ -57,6 +57,7 @@ const Calculator = () => {
 
   const calculateShippingCost = async () => {
     const { l, w, h, weight, postcode, suburb } = productInfo
+    const roundedWeight = Math.ceil(weight)
 
     let cbm = true
     const dataToCsv = {
@@ -64,19 +65,20 @@ const Calculator = () => {
       suburb
     }
 
-    const argsForApi = { width: w, height: h, depth: l, weight }
+    const argsForApi = { width: w, height: h, depth: l, weight: roundedWeight }
 
-    const eparcelCost = await calculateEparcel(postcode, weight)
+    const eparcelCost = await calculateEparcel(postcode, roundedWeight)
     setAuspostEparcelTotal(eparcelCost)
 
     const cubicWeight = ((l * w * h) / 1000000) * 250 //changing cm cubic to weight cubic
 
-    const satchelCost = await calculateSatchel(weight, cubicWeight)
+    const satchelCost = await calculateSatchel(roundedWeight, cubicWeight)
     setAuspostSatchelTotal(satchelCost)
 
-    const chargableWeith = weight > cubicWeight ? weight : cubicWeight
+    let chargableWeigth = weight > cubicWeight ? weight : cubicWeight
+    chargableWeigth = Math.ceil(chargableWeigth)
     const baseAllowWeight = 25
-    const packageCount = Math.ceil(chargableWeith / baseAllowWeight)
+    const packageCount = Math.ceil(chargableWeigth / baseAllowWeight)
     const baseCost = basePrice.fb + basePrice.sb * (packageCount - 1)
 
     const total = baseCost * basePrice.fuel * basePrice.gst
