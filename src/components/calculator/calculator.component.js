@@ -32,23 +32,19 @@ const initSuburb = {
 const Calculator = () => {
   const [productInfo, setProductInfo] = useState(initialProduct)
   const [hunterExpressTotal, setHunterExpressTotal] = useState(0)
-  const [egoTotal, setEgoTotal] = useState(0)
   const [sandleWCbmTotal, setSandleWCbmTotal] = useState(0)
   const [sandleNoCbmTotal, setsandleNoCbmTotal] = useState(0)
   const [auspostEparcelTotal, setAuspostEparcelTotal] = useState(0)
   const [auspostSatchelTotal, setAuspostSatchelTotal] = useState(0)
   const [basePrice, setBasePrice] = useState(initialBasePrice)
   const [prodList, setProdList] = useState(initialBasePrice)
-  // const [showList, setShowList] = useState(initialShowList)
   const [selectedSuburb, setSelectedSuburb] = useState(initSuburb)
 
   useEffect(() => {}, [
     productInfo,
-    // showList,
     selectedSuburb,
     basePrice,
     hunterExpressTotal,
-    egoTotal,
     sandleWCbmTotal,
     sandleNoCbmTotal,
     auspostEparcelTotal,
@@ -56,25 +52,18 @@ const Calculator = () => {
   ])
 
   const calculateShippingCost = async () => {
-    const { l, w, h, weight, postcode, suburb } = productInfo
+    const { l, w, h, weight, postcode } = productInfo
     const roundedWeight = Math.ceil(weight)
-
-    let cbm = true
-    const dataToCsv = {
-      postcode,
-      suburb
-    }
-
-    const argsForApi = { width: w, height: h, depth: l, weight: roundedWeight }
 
     const eparcelCost = (await calculateEparcel(postcode, roundedWeight)) || 0
     setAuspostEparcelTotal(eparcelCost.toFixed(2))
 
     const cubicWeight = ((l * w * h) / 1000000) * 250 //changing cm cubic to weight cubic
 
-    const satchelCost =
-      (await calculateSatchel(roundedWeight, cubicWeight)) || 0
-    setAuspostSatchelTotal(satchelCost.toFixed(2))
+    const satchelCost = await calculateSatchel(roundedWeight, cubicWeight)
+    setAuspostSatchelTotal(
+      typeof satchelCost === 'number' ? satchelCost.toFixed(2) : satchelCost
+    )
 
     let chargableWeigth = weight > cubicWeight ? weight : cubicWeight
     chargableWeigth = Math.ceil(chargableWeigth)
@@ -169,7 +158,6 @@ const Calculator = () => {
         handleOnPostcodeChange={handleOnPostcodeChange}
         selectedSuburb={selectedSuburb}
         hunterExpressTotal={hunterExpressTotal}
-        egoTotal={egoTotal}
         sandleWCbmTotal={sandleWCbmTotal}
         sandleNoCbmTotal={sandleNoCbmTotal}
         calculateShippingCost={calculateShippingCost}

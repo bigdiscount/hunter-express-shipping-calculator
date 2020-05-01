@@ -10,7 +10,6 @@ const CustomeForm = ({
   selectedSuburb,
   calculateShippingCost,
   hunterExpressTotal,
-  egoTotal,
   sandleWCbmTotal,
   sandleNoCbmTotal,
   auspostEparcelTotal,
