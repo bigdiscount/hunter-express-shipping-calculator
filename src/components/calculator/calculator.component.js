@@ -4,11 +4,7 @@ import { products } from '../../assets/products'
 import { zoneGuide } from '../../assets/newZoneGuide'
 import { hunterExpressZoneRate } from '../../assets/hunterExpressZoneRate'
 import { calculateEparcel, calculateSatchel } from '../../assets/ausPost/index'
-// import {
-//   getEgoRate,
-//   getSandleRate,
-//   getAuspostEparcelRate
-// } from '../../utils/api'
+import { getSandleRate } from '../../utils/api'
 
 const initialProduct = {
   sku: '',
@@ -52,14 +48,36 @@ const Calculator = () => {
   ])
 
   const calculateShippingCost = async () => {
-    const { l, w, h, weight, postcode } = productInfo
+    const { l, w, h, weight, postcode, suburb } = productInfo
     const roundedWeight = Math.ceil(weight)
 
+    let cbm = true
+    const dataToCsv = {
+      postcode,
+      suburb
+    }
+
+    const argsForApi = { width: w, height: h, depth: l, weight }
+
+    //SANDLE PRICING WITH CBM
+    getSandleRate(argsForApi, dataToCsv, cbm)
+      .then(price => {
+        setSandleWCbmTotal(price)
+      })
+      .catch(error => console.log(error))
+
+    //SENDLE PRICING WITHOUT CBM
+    getSandleRate(argsForApi, dataToCsv, (cbm = false)).then(price => {
+      setsandleNoCbmTotal(price)
+    })
+
+    //Get eparcel cost
     const eparcelCost = (await calculateEparcel(postcode, roundedWeight)) || 0
     setAuspostEparcelTotal(eparcelCost.toFixed(2))
 
     const cubicWeight = ((l * w * h) / 1000000) * 250 //changing cm cubic to weight cubic
 
+    //Get Sactchell cost
     const satchelCost = await calculateSatchel(roundedWeight, cubicWeight)
     setAuspostSatchelTotal(
       typeof satchelCost === 'number' ? satchelCost.toFixed(2) : satchelCost

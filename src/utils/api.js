@@ -29,11 +29,11 @@ export const getEgoRate = async (argsForApi = {}, dataToCsv = {}) => {
 }
 
 export const getSandleRate = async (argsForApi = {}, dataToCsv = {}, cbm) => {
-  const { postcode, suburb } = dataToCsv
-  const DPostcode = postcode < 1000 ? '0' + postcode : postcode
-
   const { width, height, depth, weight } = argsForApi
   const volumn = (width * height * depth) / 1000000
+
+  const { postcode, suburb } = dataToCsv
+  const DPostcode = postcode < 1000 ? '0' + postcode : postcode
 
   const endpoing_with_cbm = `https://api.sendle.com/api/quote?pickup_suburb=matraville&pickup_postcode=2036&pickup_country=AU&delivery_suburb=${suburb}&delivery_postcode=${DPostcode}&delivery_country=AU&weight_value=${weight}&weight_units=kg&volume_value=${volumn}&volume_units=m3&plan_name=Easy`
 
@@ -41,23 +41,29 @@ export const getSandleRate = async (argsForApi = {}, dataToCsv = {}, cbm) => {
 
   const endpoing = cbm ? endpoing_with_cbm : endpoing_without_cbm
   return new Promise(async (resolve, reject) => {
-    let price = 'na'
+    let price = 0
+    if (weight <= 0) {
+      resolve(price)
+    }
 
     try {
-      const result = await axios.get(endpoing, {
-        headers: {
-          connection: 'keep-alive',
-          'Content-Type': 'application/json',
-          Accept: 'application/json'
-        }
-      })
-      console.log('sandle', result)
-      if (result && result.status === 200 && result.data.length) {
-        price = result.data[0].quote.gross.amount
-      }
-      resolve(price)
+      console.log('before fetching')
+      axios
+        .get(endpoing, {
+          headers: {
+            'Content-Type': 'application/json; charset=utf-8',
+            Connection: 'keep-alive'
+          }
+        })
+        .then(result => {
+          console.log('after fetching', result)
+          if (result && result.status === 200 && result.data.length) {
+            price = result.data[0].quote.gross.amount
+          }
+          resolve(price)
+        })
     } catch (error) {
-      // console.error(error.message, postcode, suburb)
+      console.error(error)
       resolve(price)
     }
   })
