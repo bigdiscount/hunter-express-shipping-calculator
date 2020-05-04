@@ -176,6 +176,10 @@ export const products =
     {sku:'CMF-32L',title:'CMF-32L Replacement Ceramic Filter for 32L Water Bottle Bench Top Dispenser Purifier',weight:1.5,l:12,w:11,h:12},
     {sku:'dicer-fusion',title:'dicer-fusion Dicer fuson',weight:2,l:32,w:18,h:18},
     {sku:'YLT-0068',title:'YLT-0068 Bathroom Pole Rack',weight:2.5,l:88,w:6,h:26.5},
-     
-    
+    {sku:"Duvet-200GSM-King", title:'Duvet-200GSM-King | Duck Feather Down Quilt Duvet Blanket Doona',weight:3.3,l:54,w:45,h:10},
+    {sku:"Duvet-200GSM-Queen", title:'Duvet-200GSM-Queen | Duck Feather Down Quilt Duvet Blanket Doona',weight:3.2,l:54,w:45,h:10},
+    {sku:"Duvet-250GSM-King", title:'Duvet-250GSM-King | Duck Feather Down Quilt Duvet Blanket Doona',weight:3.7,l:55,w:45,h:15},
+    {sku:"Duvet-500GSM-King", title:'Duvet-500GSM-King | Duck Feather Down Quilt Duvet Blanket Doona',weight:6,l:55,w:45,h:18 },
+    {sku:"Duvet-250GSM-Queen", title:'Duvet-250GSM-Queen | Duck Feather Down Quilt Duvet Blanket Doona',weight:3,l:54,w:45,h:12},
+    {sku:"SBC5044", title:'SBC5044 | Pet carrier',weight:2, l:50,w:42,h:6},
 ]
