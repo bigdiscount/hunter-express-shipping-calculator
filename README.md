@@ -1,30 +1,38 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/zeit/next.js/tree/canary/packages/create-next-app).
+# hunter-express-shipping-calculator
 
-## Getting Started
+This app calculates the shipping cost for the hunter express courier.
 
-First, run the development server:
+## How to run
 
-```bash
-npm run dev
-# or
-yarn dev
-```
+run `npm run dev`
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Deploy
 
-You can start editing the page by modifying `pages/index.js`. The page auto-updates as you edit the file.
+Deployed to zeith
+Url: https://hunter-express.now.sh/
+run `now --prod` to deploy app from project console.
 
-## Learn More
+## Price calculation
 
-To learn more about Next.js, take a look at the following resources:
+he formula to work out the cost is 1st carton rate +18% Fuel Levy+10% GST
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+Or 1st carton rate + (total carton Qty-1)\*2nd carton rate +18% Fuel Levy+10% GST
 
-You can check out [the Next.js GitHub repository](https://github.com/zeit/next.js/) - your feedback and contributions are welcome!
+The weight is 25KG inclusive (dead weight or cubic weight ,whichever is higher )
 
-## Deploy on Vercel
+If over 25KG , 2ND carton rate apply
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/import?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## product file to object
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+For the hunter express zone guide, use in xls file ="{sku:"&A2&",title:"&A2&" "&B2&",weight:"&C2&",l:"&D2&",w:"&E2&",h:"&F2&"},"
+
+For the Auspost price guide ="'"&A2&"':{'<500g':"&C2&",'<25kg-1':"&D2&",'<25kg-2':"&E2&",perKg:"&F2&"},"
+For the Austpost zone guide
+
+# WizeMe api
+
+- Sample api get shipping cost from wizme as follow
+  Method: POST -> `https://www.wizme.com.au/wp-admin/admin-ajax.php?action=if_get_quote_price&id_pickup_zonecode=CP-2&id_delivery_zonecode=CP-2&weight=3kg&user_type=&type=post&dataType=json`
+
+- Get zone code from wizme
+  Method: GET -> `https://www.wizme.com.au/wp-admin/admin-ajax.php?action=if_autocomplete_lookup&field_focust=sender&address=BARANGAROO, nsw, 2000&page_limit=10&page=1&_=1588740147947`

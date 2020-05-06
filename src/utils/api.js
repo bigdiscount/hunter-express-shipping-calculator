@@ -81,7 +81,7 @@ export const getSandleRateFromApi = async (
 
   // const endpoing = 'http://localhost:8001/api/sendle'
   // const endpoing = 'https://sendle-shipping-cost-api.bigdiscount.now.sh/'
-  const endpoing = 'http://localhost:3000/api/get-sendle'
+  const endpoing = '/api/get-sendle'
   return new Promise(async (resolve, reject) => {
     let price = 0
     if (weight <= 0) {
