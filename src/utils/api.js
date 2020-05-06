@@ -15,14 +15,13 @@ export const getEgoRate = async (argsForApi = {}, dataToCsv = {}) => {
           connection: 'keep-alive'
         }
       })
-      console.log('ego', result)
+
       if (result.status === 200 && result.data.startsWith('error=OK')) {
         const val = result.data.split('\n')
         price = Math.ceil(val[2].split('=')[1])
       }
       resolve(price)
     } catch (error) {
-      // console.error(error, postcode, suburb)
       resolve(price)
     }
   })
@@ -81,7 +80,8 @@ export const getSandleRateFromApi = async (
   const DPostcode = postcode < 1000 ? '0' + postcode : postcode
 
   // const endpoing = 'http://localhost:8001/api/sendle'
-  const endpoing = 'https://sendle-shipping-cost-api.bigdiscount.now.sh/'
+  // const endpoing = 'https://sendle-shipping-cost-api.bigdiscount.now.sh/'
+  const endpoing = 'http://localhost:3000/api/get-sendle'
   return new Promise(async (resolve, reject) => {
     let price = 0
     if (weight <= 0) {
@@ -95,12 +95,15 @@ export const getSandleRateFromApi = async (
             DPostcode,
             suburb,
             weight,
-            volumn,
-            cbm
+            volumn: cbm ? volumn : 0.01
           }
         })
         .then(result => {
-          if (result && result.status === 200 && result.data) {
+          if (
+            result &&
+            result.status === 200 &&
+            result.data.status === 'success'
+          ) {
             price = result.data.price
           }
           resolve(price)
@@ -131,13 +134,12 @@ export const getAuspostEparcelRate = async (
           'AUTH-KEY': 'ae1ad480-d2c3-476a-8cba-15bc16cbbfbf'
         }
       })
-      console.log('auspost', result)
+
       if (result && result.status === 200 && result.data) {
         price = result.data.postage_result.total_cost
       }
       resolve(price)
     } catch (error) {
-      // console.error(error.message, postcode, suburb)
       resolve(price)
     }
   })
