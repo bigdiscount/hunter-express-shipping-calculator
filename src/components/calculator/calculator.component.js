@@ -4,7 +4,10 @@ import { products } from '../../assets/products'
 import { zoneGuide } from '../../assets/newZoneGuide'
 import { hunterExpressZoneRate } from '../../assets/hunterExpressZoneRate'
 import { calculateEparcel, calculateSatchel } from '../../assets/ausPost/index'
-import { getSandleRate } from '../../utils/api'
+import {
+  //getSandleRate,
+  getSandleRateFromApi
+} from '../../utils/api'
 
 const initialProduct = {
   sku: '',
@@ -60,14 +63,14 @@ const Calculator = () => {
     const argsForApi = { width: w, height: h, depth: l, weight }
 
     //SANDLE PRICING WITH CBM
-    getSandleRate(argsForApi, dataToCsv, cbm)
+    getSandleRateFromApi(argsForApi, dataToCsv, cbm)
       .then(price => {
         setSandleWCbmTotal(price)
       })
       .catch(error => console.log(error))
 
     //SENDLE PRICING WITHOUT CBM
-    getSandleRate(argsForApi, dataToCsv, (cbm = false)).then(price => {
+    getSandleRateFromApi(argsForApi, dataToCsv, (cbm = false)).then(price => {
       setsandleNoCbmTotal(price)
     })
 

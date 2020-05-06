@@ -1,5 +1,5 @@
-import React from 'react'
-import Header from './_header.coponent'
+import React from "react";
+import Header from "./_header.coponent";
 
 const Layout = ({ children }) => {
   return (
@@ -7,9 +7,9 @@ const Layout = ({ children }) => {
       <div className="bg-primary">
         <Header />
       </div>
-      <div className="container">{children}</div>
+      <main className="container">{children}</main>
     </>
-  )
-}
+  );
+};
 
-export default Layout
+export default Layout;
