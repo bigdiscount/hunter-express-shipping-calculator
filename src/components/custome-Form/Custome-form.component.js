@@ -14,9 +14,12 @@ const CustomeForm = ({
   sandleNoCbmTotal,
   auspostEparcelTotal,
   auspostSatchelTotal,
-  wizMeTotal
+  wizMeTotal,
+  handleManulEntryFrm,
+  showManualEntryFrm,
+  handleOnChangeManualProduct
 }) => {
-  const { sku, weight, postcode } = productInfo
+  const { sku, weight, postcode, l, w, h } = productInfo
   const { lists, zone } = selectedSuburb
 
   return (
@@ -71,7 +74,74 @@ const CustomeForm = ({
             />
           </div>
         </div>
-        <div className="form-row">
+
+        <div className="text-right">
+          <a
+            onClick={handleManulEntryFrm}
+            className="btn btn-small btn-primary"
+          >
+            Manual Entry
+          </a>
+        </div>
+
+        {showManualEntryFrm && (
+          <div className="form-row">
+            <div className="form-group col-md-3 text-white ">
+              <label htmlFor="weight">Weight(kg)</label>
+              <input
+                type="text"
+                className="form-control"
+                name="weight"
+                value={weight}
+                onChange={handleOnChangeManualProduct}
+                placeholder="i.e. 4.5"
+                max="9999"
+                required
+              />
+            </div>
+            <div className="form-group col-md-3 text-white ">
+              <label htmlFor="l">L(cm)</label>
+              <input
+                type="text"
+                className="form-control"
+                name="l"
+                value={l}
+                onChange={handleOnChangeManualProduct}
+                placeholder="i.e. 4.5"
+                max="9999"
+                required
+              />
+            </div>
+            <div className="form-group col-md-3 text-white ">
+              <label htmlFor="w">W(cm)</label>
+              <input
+                type="text"
+                className="form-control"
+                name="w"
+                value={w}
+                onChange={handleOnChangeManualProduct}
+                placeholder="i.e. 3.5"
+                max="9999"
+                required
+              />
+            </div>
+            <div className="form-group col-md-3 text-white ">
+              <label htmlFor="h">H(cm)</label>
+              <input
+                type="text"
+                className="form-control"
+                name="h"
+                value={h}
+                onChange={handleOnChangeManualProduct}
+                placeholder="i.e. 4.5"
+                max="9999"
+                required
+              />
+            </div>
+          </div>
+        )}
+
+        <div className="form-row mt-4">
           <div className="form-group col-md-5 text-white ">
             <label htmlFor="postcode">Postcode</label>
             <input
@@ -116,6 +186,7 @@ const CustomeForm = ({
             />
           </div>
         </div>
+
         <div
           className="btn btn-block btn-primary"
           onClick={calculateShippingCost}

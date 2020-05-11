@@ -83,3 +83,16 @@ export const calculateWizMeBusinessRate = ({
     price = !priceCode ? 'No Delivery' : rates[priceCode] || 0
     resolve(price)
   })
+
+export const calculateHunterExpress = ({ weight, cubicWeight, basePrice }) => {
+  return new Promise(resolve => {
+    let chargableWeigth = weight > cubicWeight ? weight : cubicWeight
+    chargableWeigth = Math.ceil(chargableWeigth)
+    const baseAllowWeight = 25
+    const packageCount = Math.ceil(chargableWeigth / baseAllowWeight)
+    const baseCost = basePrice.fb + basePrice.sb * (packageCount - 1)
+
+    const total = baseCost * basePrice.fuel * basePrice.gst
+    resolve(total.toFixed(2))
+  })
+}

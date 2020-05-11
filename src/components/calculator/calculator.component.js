@@ -5,13 +5,16 @@ import { zoneGuide } from '../../assets/newZoneGuide'
 import { hunterExpressZoneRate } from '../../assets/hunterExpressZoneRate'
 import { calculateEparcel, calculateSatchel } from '../../assets/ausPost/index'
 import { getSandleRateFromApi } from '../../utils/api'
-import { calculateWizMeBusinessRate } from '../../utils'
+import { calculateWizMeBusinessRate, calculateHunterExpress } from '../../utils'
 
 const initialProduct = {
   sku: '',
   title: '',
   weight: 0,
-  postcode: ''
+  postcode: '',
+  l: '',
+  w: '',
+  h: ''
 }
 const initialBasePrice = {
   fb: '',
@@ -37,6 +40,7 @@ const Calculator = () => {
   const [basePrice, setBasePrice] = useState(initialBasePrice)
   const [prodList, setProdList] = useState(initialBasePrice)
   const [selectedSuburb, setSelectedSuburb] = useState(initSuburb)
+  const [showManualEntryFrm, setShowManualEntryFrm] = useState(false)
 
   useEffect(() => {}, [
     productInfo,
@@ -46,7 +50,9 @@ const Calculator = () => {
     sandleWCbmTotal,
     sandleNoCbmTotal,
     auspostEparcelTotal,
-    auspostSatchelTotal
+    auspostSatchelTotal,
+    showManualEntryFrm,
+    wizMeTotal
   ])
 
   const calculateShippingCost = async () => {
@@ -77,7 +83,8 @@ const Calculator = () => {
     const eparcelCost = (await calculateEparcel(postcode, roundedWeight)) || 0
     setAuspostEparcelTotal(eparcelCost.toFixed(2))
 
-    const cubicLiter = (l * w * h) / 1000
+    const cubicLiter = (l * w * h) / 1000 // cm to Liter
+    const cubicWeight = ((l * w * h) / 1000000) * 250 //changing cm cubic to weight cubic
 
     //Get WizMe cost
     const wizMeCost = await calculateWizMeBusinessRate({
@@ -88,22 +95,18 @@ const Calculator = () => {
     })
     setWizMeTotal(wizMeCost || 0)
 
-    const cubicWeight = ((l * w * h) / 1000000) * 250 //changing cm cubic to weight cubic
-
     //Get Sactchell cost
     const satchelCost = await calculateSatchel(roundedWeight, cubicWeight)
     setAuspostSatchelTotal(
       typeof satchelCost === 'number' ? satchelCost.toFixed(2) : satchelCost
     )
 
-    let chargableWeigth = weight > cubicWeight ? weight : cubicWeight
-    chargableWeigth = Math.ceil(chargableWeigth)
-    const baseAllowWeight = 25
-    const packageCount = Math.ceil(chargableWeigth / baseAllowWeight)
-    const baseCost = basePrice.fb + basePrice.sb * (packageCount - 1)
-
-    const total = baseCost * basePrice.fuel * basePrice.gst
-    setHunterExpressTotal(total.toFixed(2))
+    const hunterExpressCost = await calculateHunterExpress({
+      weight,
+      cubicWeight,
+      basePrice
+    })
+    setHunterExpressTotal(hunterExpressCost)
   }
 
   const handleProductSearch = e => {
@@ -176,6 +179,21 @@ const Calculator = () => {
     })
   }
 
+  const handleManulEntryFrm = () => {
+    setShowManualEntryFrm(!showManualEntryFrm)
+  }
+
+  const handleOnChangeManualProduct = e => {
+    e.preventDefault()
+
+    const { name, value } = e.target
+
+    setProductInfo({
+      ...productInfo,
+      [name]: value
+    })
+  }
+
   return (
     <div className="text-white">
       Use calculator below to calculate Hunter Express shipping const.
@@ -195,6 +213,9 @@ const Calculator = () => {
         auspostEparcelTotal={auspostEparcelTotal}
         auspostSatchelTotal={auspostSatchelTotal}
         wizMeTotal={wizMeTotal}
+        handleManulEntryFrm={handleManulEntryFrm}
+        showManualEntryFrm={showManualEntryFrm}
+        handleOnChangeManualProduct={handleOnChangeManualProduct}
       />
     </div>
   )
