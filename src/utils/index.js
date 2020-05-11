@@ -67,14 +67,19 @@ export const calculateWizMeBusinessRate = ({
   postcode,
   suburb,
   weight,
-  cubicLiter
+  cubicLiter,
+  isDeadWeightOnly = false
 }) =>
   new Promise(async resolve => {
     let price = 0
     if (!postcode || !suburb) {
       resolve(price)
     }
-    const weightCategory = getWizMeWeightCategory({ weight, cubicLiter })
+
+    const weightCategory = getWizMeWeightCategory({
+      weight,
+      cubicLiter: isDeadWeightOnly ? 0 : cubicLiter
+    })
     const rates = await getWizMeZoneBusienssRate(weightCategory)
 
     const zone = await getWizMeZone(`${postcode}-${suburb}`)

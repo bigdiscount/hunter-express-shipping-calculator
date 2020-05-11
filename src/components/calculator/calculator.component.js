@@ -35,6 +35,7 @@ const Calculator = () => {
   const [sandleWCbmTotal, setSandleWCbmTotal] = useState(0)
   const [sandleNoCbmTotal, setsandleNoCbmTotal] = useState(0)
   const [wizMeTotal, setWizMeTotal] = useState(0)
+  const [wizMeCostWdeadWeight, setWizMeCostWdeadWeight] = useState(0)
   const [auspostEparcelTotal, setAuspostEparcelTotal] = useState(0)
   const [auspostSatchelTotal, setAuspostSatchelTotal] = useState(0)
   const [basePrice, setBasePrice] = useState(initialBasePrice)
@@ -52,7 +53,8 @@ const Calculator = () => {
     auspostEparcelTotal,
     auspostSatchelTotal,
     showManualEntryFrm,
-    wizMeTotal
+    wizMeTotal,
+    wizMeCostWdeadWeight
   ])
 
   const calculateShippingCost = async () => {
@@ -91,9 +93,20 @@ const Calculator = () => {
       postcode,
       suburb,
       weight,
-      cubicLiter
+      cubicLiter,
+      isDeadWeightOnly: false
     })
     setWizMeTotal(wizMeCost || 0)
+
+    //Get WizMe cost width dead weight only
+    const wizMeCostWdeadWeight = await calculateWizMeBusinessRate({
+      postcode,
+      suburb,
+      weight,
+      cubicLiter,
+      isDeadWeightOnly: true
+    })
+    setWizMeCostWdeadWeight(wizMeCostWdeadWeight || 0)
 
     //Get Sactchell cost
     const satchelCost = await calculateSatchel(roundedWeight, cubicWeight)
@@ -213,6 +226,7 @@ const Calculator = () => {
         auspostEparcelTotal={auspostEparcelTotal}
         auspostSatchelTotal={auspostSatchelTotal}
         wizMeTotal={wizMeTotal}
+        wizMeCostWdeadWeight={wizMeCostWdeadWeight}
         handleManulEntryFrm={handleManulEntryFrm}
         showManualEntryFrm={showManualEntryFrm}
         handleOnChangeManualProduct={handleOnChangeManualProduct}

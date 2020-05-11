@@ -15,6 +15,7 @@ const CustomeForm = ({
   auspostEparcelTotal,
   auspostSatchelTotal,
   wizMeTotal,
+  wizMeCostWdeadWeight,
   handleManulEntryFrm,
   showManualEntryFrm,
   handleOnChangeManualProduct
@@ -194,19 +195,46 @@ const CustomeForm = ({
           Calculate
         </div>
         <hr />
+
         <div className="result text-white" style={{ fontSize: '20px' }}>
           Shipping cost:
           <hr />
-          Auspost eParcel = ${auspostEparcelTotal} <br />
-          Auspost Satchell = ${auspostSatchelTotal}
-          <br />
-          <br />
-          WizMe = ${wizMeTotal}
-          <br />
-          <br />
-          Sandle with CBM = ${sandleWCbmTotal} <br />
-          Sandle without CBM = ${sandleNoCbmTotal} <br /> <br />
-          Hunter express = ${hunterExpressTotal} <br />
+          <div className="row">
+            <div className="col">
+              Auspost eParcel = ${auspostEparcelTotal} <br />
+              Auspost Satchell = ${auspostSatchelTotal}
+              <br />
+              <br />
+              Sandle with CBM = ${sandleWCbmTotal} <br />
+              Sandle without CBM = ${sandleNoCbmTotal} <br /> <br />
+              Hunter express = ${hunterExpressTotal} <br />
+            </div>
+            <div className="col">
+              WizMe::
+              <hr />
+              <table border="1px" className="text-center" width="100%">
+                <thead>
+                  <tr>
+                    <th>Tire</th>
+                    <th>Dimantion</th>
+                    <th>Dead Weigh Only</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>Correct</td>
+                    <td>${wizMeTotal}</td>
+                    <td>${wizMeCostWdeadWeight}</td>
+                  </tr>
+                  <tr>
+                    <td>Lower</td>
+                    <td>$0</td>
+                    <td>$0</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
         </div>
       </form>
     </div>
