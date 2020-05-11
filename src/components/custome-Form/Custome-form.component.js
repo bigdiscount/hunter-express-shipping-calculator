@@ -216,7 +216,7 @@ const CustomeForm = ({
                 <thead>
                   <tr>
                     <th>Tire</th>
-                    <th>Dimantion</th>
+                    <th>Dimension</th>
                     <th>Dead Weigh Only</th>
                   </tr>
                 </thead>
