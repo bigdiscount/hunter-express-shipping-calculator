@@ -4,10 +4,8 @@ import { products } from '../../assets/products'
 import { zoneGuide } from '../../assets/newZoneGuide'
 import { hunterExpressZoneRate } from '../../assets/hunterExpressZoneRate'
 import { calculateEparcel, calculateSatchel } from '../../assets/ausPost/index'
-import {
-  //getSandleRate,
-  getSandleRateFromApi
-} from '../../utils/api'
+import { getSandleRateFromApi } from '../../utils/api'
+import { calculateWizMeBusinessRate } from '../../utils'
 
 const initialProduct = {
   sku: '',
@@ -33,6 +31,7 @@ const Calculator = () => {
   const [hunterExpressTotal, setHunterExpressTotal] = useState(0)
   const [sandleWCbmTotal, setSandleWCbmTotal] = useState(0)
   const [sandleNoCbmTotal, setsandleNoCbmTotal] = useState(0)
+  const [wizMeTotal, setWizMeTotal] = useState(0)
   const [auspostEparcelTotal, setAuspostEparcelTotal] = useState(0)
   const [auspostSatchelTotal, setAuspostSatchelTotal] = useState(0)
   const [basePrice, setBasePrice] = useState(initialBasePrice)
@@ -77,6 +76,17 @@ const Calculator = () => {
     //Get eparcel cost
     const eparcelCost = (await calculateEparcel(postcode, roundedWeight)) || 0
     setAuspostEparcelTotal(eparcelCost.toFixed(2))
+
+    const cubicLiter = (l * w * h) / 1000
+
+    //Get WizMe cost
+    const wizMeCost = await calculateWizMeBusinessRate({
+      postcode,
+      suburb,
+      weight,
+      cubicLiter
+    })
+    setWizMeTotal(wizMeCost || 0)
 
     const cubicWeight = ((l * w * h) / 1000000) * 250 //changing cm cubic to weight cubic
 
@@ -184,6 +194,7 @@ const Calculator = () => {
         calculateShippingCost={calculateShippingCost}
         auspostEparcelTotal={auspostEparcelTotal}
         auspostSatchelTotal={auspostSatchelTotal}
+        wizMeTotal={wizMeTotal}
       />
     </div>
   )

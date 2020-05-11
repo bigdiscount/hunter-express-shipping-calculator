@@ -1,4 +1,4 @@
-import React from "react";
+import React from 'react'
 
 const CustomeForm = ({
   productInfo,
@@ -13,10 +13,11 @@ const CustomeForm = ({
   sandleWCbmTotal,
   sandleNoCbmTotal,
   auspostEparcelTotal,
-  auspostSatchelTotal
+  auspostSatchelTotal,
+  wizMeTotal
 }) => {
-  const { sku, weight, postcode } = productInfo;
-  const { lists, zone } = selectedSuburb;
+  const { sku, weight, postcode } = productInfo
+  const { lists, zone } = selectedSuburb
 
   return (
     <div width="50%">
@@ -45,7 +46,7 @@ const CustomeForm = ({
                         key={i}
                         className="list-group-item"
                         onClick={() => handleSelectProd(row)}
-                        style={{ cursor: "pointer" }}
+                        style={{ cursor: 'pointer' }}
                       >
                         {row.title}
                       </li>
@@ -53,7 +54,7 @@ const CustomeForm = ({
                 )}
               </ul>
             ) : (
-              ""
+              ''
             )}
           </div>
           <div className="form-group col-md-6  text-white">
@@ -122,19 +123,23 @@ const CustomeForm = ({
           Calculate
         </div>
         <hr />
-        <div className="result text-white" style={{ fontSize: "20px" }}>
+        <div className="result text-white" style={{ fontSize: '20px' }}>
           Shipping cost:
           <hr />
           Auspost eParcel = ${auspostEparcelTotal} <br />
           Auspost Satchell = ${auspostSatchelTotal}
           <br />
+          <br />
+          WizMe = ${wizMeTotal}
+          <br />
+          <br />
           Sandle with CBM = ${sandleWCbmTotal} <br />
-          Sandle without CBM = ${sandleNoCbmTotal} <br />
+          Sandle without CBM = ${sandleNoCbmTotal} <br /> <br />
           Hunter express = ${hunterExpressTotal} <br />
         </div>
       </form>
     </div>
-  );
-};
+  )
+}
 
-export default CustomeForm;
+export default CustomeForm
