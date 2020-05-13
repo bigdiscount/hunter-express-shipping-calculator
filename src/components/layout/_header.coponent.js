@@ -1,5 +1,5 @@
-import Head from "next/head";
-import Link from "next/link";
+import Head from 'next/head'
+import Link from 'next/link'
 
 const Header = () => {
   return (
@@ -11,7 +11,7 @@ const Header = () => {
           href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
           rel="stylesheet"
           integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh"
-          crossorigin="anonymous"
+          crossOrigin="anonymous"
         />
       </Head>
       <nav className="navbar navbar-expand-lg navbar-light bg-primary text-light">
@@ -40,6 +40,6 @@ const Header = () => {
         </div>
       </nav>
     </header>
-  );
-};
-export default Header;
+  )
+}
+export default Header

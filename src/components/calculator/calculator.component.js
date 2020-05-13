@@ -77,9 +77,12 @@ const Calculator = () => {
       .catch(error => console.log(error))
 
     //SENDLE PRICING WITHOUT CBM
-    getSandleRateFromApi(argsForApi, dataToCsv, (cbm = false)).then(price => {
-      setsandleNoCbmTotal(price)
-    })
+    const sendlePrice = await getSandleRateFromApi(
+      argsForApi,
+      dataToCsv,
+      (cbm = false)
+    )
+    setsandleNoCbmTotal(sendlePrice)
 
     //Get eparcel cost
     const eparcelCost = (await calculateEparcel(postcode, roundedWeight)) || 0
@@ -96,7 +99,7 @@ const Calculator = () => {
       cubicLiter,
       isDeadWeightOnly: false
     })
-    setWizMeTotal(wizMeCost || 0)
+    setWizMeTotal(wizMeCost)
 
     //Get WizMe cost width dead weight only
     const wizMeCostWdeadWeight = await calculateWizMeBusinessRate({
@@ -106,7 +109,7 @@ const Calculator = () => {
       cubicLiter,
       isDeadWeightOnly: true
     })
-    setWizMeCostWdeadWeight(wizMeCostWdeadWeight || 0)
+    setWizMeCostWdeadWeight(wizMeCostWdeadWeight)
 
     //Get Sactchell cost
     const satchelCost = await calculateSatchel(roundedWeight, cubicWeight)
@@ -114,11 +117,13 @@ const Calculator = () => {
       typeof satchelCost === 'number' ? satchelCost.toFixed(2) : satchelCost
     )
 
+    //Get HunterExpress cost
     const hunterExpressCost = await calculateHunterExpress({
       weight,
       cubicWeight,
       basePrice
     })
+
     setHunterExpressTotal(hunterExpressCost)
   }
 

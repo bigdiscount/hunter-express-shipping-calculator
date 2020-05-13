@@ -87,7 +87,7 @@ export const products =
     {sku:'BBQ-HZA8805',title:'BBQ-HZA8805 Portable Stainless Steel BBQ Charcoal Grill',weight:4.2,l:64,w:33,h:13},
     {sku:'HZA29',title:'HZA29 BBQ Charcoal Grill Portable Stainless Steel',weight:2.3,l:44,w:31,h:7.5},
     {sku:'PSSL03-2',title:'PSSL03-2 Above Ground Swimming Pool Ladder 3 Steps',weight:6.8,l:41,w:13,h:70},
-    {sku:'Clock-400',title:'Clock-400 Wall Clock Chrome Vintage Retro Quartz Modern 40cm',weight:3.5,l:51,w:47,h:18},
+    {sku:'Clock-400',title:'Clock-400 Wall Clock Chrome Vintage Retro Quartz Modern 40cm',weight:3.7,l:51,w:47,h:18},
     {sku:'Royce-sb-1000',title:'Royce-sb-1000 Royce Hammer Drill ToolsProfessional 1000w13mm',weight:2.3,l:29,w:27,h:8},
     {sku:'Clock-16420-Roman',title:'Clock-16420-Roman Roman Numeral Wall Clock Metal Casing Quartz',weight:2.7,l:44,w:43,h:8.5},
     {sku:'PL6018',title:'PL6018 Wall Clock Aluminium Casing Home Decor Design Quartz',weight:0,l:0,w:0,h:0},

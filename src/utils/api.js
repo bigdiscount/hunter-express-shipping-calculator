@@ -22,6 +22,7 @@ export const getEgoRate = async (argsForApi = {}, dataToCsv = {}) => {
       }
       resolve(price)
     } catch (error) {
+      console.log(error.message)
       resolve(price)
     }
   })
@@ -89,25 +90,19 @@ export const getSandleRateFromApi = async (
     }
 
     try {
-      axios
-        .post(endpoing, {
-          info: {
-            DPostcode,
-            suburb,
-            weight,
-            volumn: cbm ? volumn : 0.01
-          }
-        })
-        .then(result => {
-          if (
-            result &&
-            result.status === 200 &&
-            result.data.status === 'success'
-          ) {
-            price = result.data.price
-          }
-          resolve(price)
-        })
+      const result = await axios.post(endpoing, {
+        info: {
+          DPostcode,
+          suburb,
+          weight,
+          volumn: cbm ? volumn : 0.01
+        }
+      })
+
+      if (result && result.status === 200 && result.data.status === 'success') {
+        price = result.data.price
+      }
+      resolve(price)
     } catch (error) {
       console.error(error)
       resolve(price)
@@ -140,6 +135,7 @@ export const getAuspostEparcelRate = async (
       }
       resolve(price)
     } catch (error) {
+      console.log(error.message)
       resolve(price)
     }
   })

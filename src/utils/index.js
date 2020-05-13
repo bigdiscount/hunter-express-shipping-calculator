@@ -11,11 +11,11 @@ const getWizMeZone = postcodeSuburb =>
   })
 
 const getWizMeZoneBusienssRate = cubWeight =>
-  new Promise(resolve => {
+  new Promise(async resolve => {
     if (!cubWeight) {
       resolve(false)
     }
-    const rates = wizMeZoneBusinessRate[cubWeight]
+    const rates = await wizMeZoneBusinessRate[cubWeight]
     resolve(rates)
   })
 
@@ -68,9 +68,9 @@ export const calculateWizMeBusinessRate = ({
   suburb,
   weight,
   cubicLiter,
-  isDeadWeightOnly = false
-}) =>
-  new Promise(async resolve => {
+  isDeadWeightOnly
+}) => {
+  return new Promise(async resolve => {
     let price = 0
     if (!postcode || !suburb) {
       resolve(price)
@@ -85,10 +85,10 @@ export const calculateWizMeBusinessRate = ({
     const zone = await getWizMeZone(`${postcode}-${suburb}`)
     const priceCode = await setZoneCode(zone)
 
-    price = !priceCode ? 'No Delivery' : rates[priceCode] || 0
+    price = !priceCode ? 'No Delivery' : (rates && rates[priceCode]) || 0
     resolve(price)
   })
-
+}
 export const calculateHunterExpress = ({ weight, cubicWeight, basePrice }) => {
   return new Promise(resolve => {
     let chargableWeigth = weight > cubicWeight ? weight : cubicWeight
@@ -98,6 +98,7 @@ export const calculateHunterExpress = ({ weight, cubicWeight, basePrice }) => {
     const baseCost = basePrice.fb + basePrice.sb * (packageCount - 1)
 
     const total = baseCost * basePrice.fuel * basePrice.gst
+
     resolve(total.toFixed(2))
   })
 }
