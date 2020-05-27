@@ -63,6 +63,14 @@ const getWizMeWeightCategory = ({ weight, cubicLiter }) => {
   return '25kg/100L'
 }
 
+const getWizMeLowerTirePrice = rank => {
+  return new Promise(async resolve => {
+    const ratesObj = Object.values(wizMeZoneBusinessRate)
+    const result = ratesObj.filter(row => row.rank === rank - 1)
+    resolve(result.length ? result[0] : null)
+  })
+}
+
 export const calculateWizMeBusinessRate = ({
   postcode,
   suburb,
@@ -80,13 +88,24 @@ export const calculateWizMeBusinessRate = ({
       weight,
       cubicLiter: isDeadWeightOnly ? 0 : cubicLiter
     })
-    const rates = await getWizMeZoneBusienssRate(weightCategory)
+    const rates = await getWizMeZoneBusienssRate(weightCategory) //object
 
     const zone = await getWizMeZone(`${postcode}-${suburb}`)
     const priceCode = await setZoneCode(zone)
 
     price = !priceCode ? 'No Delivery' : (rates && rates[priceCode]) || 0
-    resolve(price)
+    let lowerPrice = 0
+
+    if (weightCategory != '50g/2L') {
+      const lowerRateRow = await getWizMeLowerTirePrice(rates.rank)
+      if (lowerRateRow) {
+        lowerPrice = !priceCode ? 'No Delivery' : lowerRateRow[priceCode] || 0
+      }
+    } else {
+      lowerPrice = price
+    }
+
+    resolve({ price, lowerPrice })
   })
 }
 export const calculateHunterExpress = ({ weight, cubicWeight, basePrice }) => {

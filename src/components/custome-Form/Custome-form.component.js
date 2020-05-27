@@ -223,13 +223,13 @@ const CustomeForm = ({
                 <tbody>
                   <tr>
                     <td>Correct</td>
-                    <td>${wizMeTotal}</td>
-                    <td>${wizMeCostWdeadWeight}</td>
+                    <td>${wizMeTotal.price}</td>
+                    <td>${wizMeCostWdeadWeight.price}</td>
                   </tr>
                   <tr>
                     <td>Lower</td>
-                    <td>$0</td>
-                    <td>$0</td>
+                    <td>${wizMeTotal.lowerPrice}</td>
+                    <td>${wizMeCostWdeadWeight.lowerPrice}</td>
                   </tr>
                 </tbody>
               </table>
